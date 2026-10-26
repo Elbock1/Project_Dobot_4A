@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Menu Principal - Dobot IA Multimodale{% endblock %}
+{% block header_title %}Plateforme Multimodale Dobot{% endblock %}
+{% block back_button %}{% endblock %}
+
+{% block content %}
+<div class="menu-container">
+    <a href="/manuel" class="menu-card">
+        <i class="fa-solid fa-gamepad"></i>
+        <h3>Pilotage Manuel</h3>
+        <p>Manette tactile fluide pour piloter les axes cartésiens et articulaires.</p>
+    </a>
+    <a href="/texte" class="menu-card">
+        <i class="fa-solid fa-keyboard"></i>
+        <h3>Commande Textuelle</h3>
+        <p>Instructions écrites directes ("va à...", "trie tout", commandes JSON).</p>
+    </a>
+    <a href="/voix" class="menu-card">
+        <i class="fa-solid fa-microphone"></i>
+        <h3>Commande Vocale</h3>
+        <p>Pilotage par la voix et transcription audio locale.</p>
+    </a>
+    <a href="/gestes" class="menu-card">
+        <i class="fa-solid fa-hand"></i>
+        <h3>Suivi de Gestes</h3>
+        <p>Reconnaissance de la main et des postures par vision.</p>
+    </a>
+    <a href="/image" class="menu-card">
+        <i class="fa-solid fa-image"></i>
+        <h3>Traitement d'Image</h3>
+        <p>Calibration, détection de formes et tri couleur sur tapis.</p>
+    </a>
+</div>
+{% endblock %}

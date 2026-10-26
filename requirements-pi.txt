@@ -1,0 +1,3 @@
+-r requirements.txt
+# Spécifique Raspberry Pi
+# picamera2 est généralement installé via apt : python3-picamera2

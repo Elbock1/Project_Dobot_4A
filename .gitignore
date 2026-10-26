@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.log
+
+# Models & Datasets (trop lourds pour Git)
+models/*.gguf
+models/*.pt
+models/*.onnx
+datasets/*
+!datasets/.gitkeep
+!models/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Certificats SSL locaux
+*.pem
+*.key
+*.crt

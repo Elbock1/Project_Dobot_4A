@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dobot IA Multimodale{% endblock %} - ENSIL-ENSCI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        {% block back_button %}
+        <a href="/" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Menu</a>
+        {% endblock %}
+        <div class="header-content">
+            <div class="logo-box">ENSIL-ENSCI</div>
+            <h1>{% block header_title %}Dobot Magician IA{% endblock %}</h1>
+        </div>
+        <button class="header-estop" onclick="fetch('/api/arret', {method:'POST'}).then(r=>r.json()).then(d=>alert(d.message || d.dernier_message || 'ARRÊT D\'URGENCE'))">
+            <i class="fa-solid fa-octagon-xmark"></i> ARRÊT
+        </button>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

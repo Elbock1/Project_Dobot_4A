@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Import d'Image - Dobot{% endblock %}
+{% block header_title %}Analyse d'Image et Calibration{% endblock %}
+
+{% block content %}
+<div class="standard-box" style="text-align: center;">
+    <h3>Détection d'objets et tri</h3>
+    <div style="border: 2px dashed var(--primary-orange); padding: 30px; border-radius: 10px; background: #fffaf5; cursor: pointer; margin: 20px 0;" onclick="document.getElementById('fileInput').click()">
+        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.8rem; color: var(--primary-orange);"></i>
+        <p style="margin-top: 10px;">Cliquez pour charger une image du tapis (PNG, JPG)</p>
+        <input type="file" id="fileInput" style="display: none;" onchange="onFile(this)">
+    </div>
+    <p id="fileName" style="font-weight: bold; color: #555;"></p>
+    <button class="primary-btn" onclick="alert('Traitement d\'image transmis au module de vision.')">
+        <i class="fa-solid fa-magnifying-glass"></i> Lancer la Détection des Objets
+    </button>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function onFile(input) {
+    if (input.files.length > 0) {
+        document.getElementById('fileName').innerText = "Fichier sélectionné : " + input.files[0].name;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Commande Vocale - Dobot{% endblock %}
+{% block header_title %}Commande Vocale (STT){% endblock %}
+
+{% block content %}
+<div class="standard-box" style="text-align: center;">
+    <h3>Enregistrement vocal via microphone</h3>
+    <button class="joy-btn" id="micBtn" style="position: static; margin: 25px auto; width: 90px; height: 90px; font-size: 2.2rem;" onclick="basculerEnregistrement()">
+        <i class="fa-solid fa-microphone"></i>
+    </button>
+    <p id="voiceStatus" style="font-style: italic; color: #666;">Cliquez sur le micro pour parler.</p>
+    <div class="log-console" id="voiceLog">Journal vocal prêt...</div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let enEnregistrement = false;
+function basculerEnregistrement() {
+    enEnregistrement = !enEnregistrement;
+    const bouton = document.getElementById('micBtn');
+    const statut = document.getElementById('voiceStatus');
+    const journal = document.getElementById('voiceLog');
+
+    if (enEnregistrement) {
+        bouton.style.backgroundColor = 'var(--danger-red)';
+        statut.innerText = "Écoute en cours (micro activé)... Parlez maintenant.";
+        journal.innerText = "> Capture audio en cours...";
+    } else {
+        bouton.style.backgroundColor = 'var(--primary-orange)';
+        statut.innerText = "Traitement audio terminé.";
+        journal.innerText = "> Extrait audio transmis pour transcription STT (Whisper).";
+    }
+}
+window.toggleRecord = basculerEnregistrement;
+</script>
+{% endblock %}
+

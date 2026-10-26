@@ -1,0 +1,82 @@
+# Dobot AI Multimodale - Configuration en français
+
+robot:
+  # Port série: "COM4", "/dev/ttyACM0", "/dev/ttyUSB0", ou "AUTO"
+  port: "COM4"
+  baudrate: 115200
+  debit_bauds: 115200
+  # Si true ou si la connexion échoue, active la simulation logicielle (DobotSimule / MockDobot)
+  mock: false
+  simulation: false
+  # Timeout d'absence de battement en JOG (secondes)
+  jog_timeout: 0.5
+  delai_jog: 0.5
+  # Fréquence du thread de télémétrie (Hz)
+  telemetry_rate_hz: 4.0
+  frequence_telemetrie_hz: 4.0
+
+vitesses:
+  vitesse_par_defaut: 200
+  acceleration_par_defaut: 200
+  vitesse_jog: 150
+  acceleration_jog: 300
+  ratio_jog_par_defaut: 100
+
+speeds:
+  default_velocity: 200
+  default_acceleration: 200
+  jog_velocity: 150
+  jog_acceleration: 300
+  default_jog_ratio: 100
+
+securite:
+  # Enveloppe de travail cartésienne autorisée (en mm)
+  x_min: 100.0
+  x_max: 320.0
+  y_min: -200.0
+  y_max: 200.0
+  z_min: -50.0
+  z_max: 150.0
+  # Hauteur minimale sécurisée au-dessus du tapis pour les transits
+  z_transit_min: 20.0
+  # Plafond de vitesse en mode automatique (%)
+  max_auto_speed_ratio: 70
+  ratio_vitesse_auto_max: 70
+
+safety:
+  x_min: 100.0
+  x_max: 320.0
+  y_min: -200.0
+  y_max: 200.0
+  z_min: -50.0
+  z_max: 150.0
+  z_transit_min: 20.0
+  max_auto_speed_ratio: 70
+
+espace_de_travail:
+  bacs:
+    bac_1: { x: 180.0, y: -150.0, z: 10.0, r: 0.0 }
+    bac_2: { x: 230.0, y: -150.0, z: 10.0, r: 0.0 }
+    bac_3: { x: 280.0, y: -150.0, z: 10.0, r: 0.0 }
+  tapis:
+    largeur_mm: 300.0
+    hauteur_mm: 200.0
+
+workspace:
+  bins:
+    bac_1: { x: 180.0, y: -150.0, z: 10.0, r: 0.0 }
+    bac_2: { x: 230.0, y: -150.0, z: 10.0, r: 0.0 }
+    bac_3: { x: 280.0, y: -150.0, z: 10.0, r: 0.0 }
+  mat:
+    width_mm: 300.0
+    height_mm: 200.0
+
+serveur:
+  hote: "0.0.0.0"
+  port: 5000
+  debug: false
+
+server:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false

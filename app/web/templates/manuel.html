@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Pilotage Manuel - Dobot{% endblock %}
+{% block header_title %}Pilotage Manuel (JOG){% endblock %}
+
+{% block content %}
+<div class="workspace">
+    <!-- Panneau Manette & Contrôle Direct -->
+    <div class="panel">
+        <h2><i class="fa-solid fa-gamepad"></i> Pilotage Direct du Bras</h2>
+
+        <div class="mode-switch">
+            <button class="mode-btn active" id="modeCart" onclick="changerMode('cart')">Cartésien (X Y Z R)</button>
+            <button class="mode-btn" id="modeJoint" onclick="changerMode('joint')">Articulaire (J1-J4)</button>
+        </div>
+
+        <!-- Mode Cartésien -->
+        <div class="pad" id="cartPad">
+            <div class="joystick-container">
+                <button class="joy-btn joy-up" onpointerdown="demarrerMouvement(event, 'Y', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-chevron-up"></i></button>
+                <button class="joy-btn joy-left" onpointerdown="demarrerMouvement(event, 'X', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="joy-center" onclick="lancerRecalage()">HOME</button>
+                <button class="joy-btn joy-right" onpointerdown="demarrerMouvement(event, 'X', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-chevron-right"></i></button>
+                <button class="joy-btn joy-down" onpointerdown="demarrerMouvement(event, 'Y', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="secondary-controls">
+                <div class="control-group">
+                    <span>Hauteur (Z)</span>
+                    <div class="btn-row">
+                        <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'Z', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-plus"></i></button>
+                        <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'Z', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <span>Rotation (R)</span>
+                    <div class="btn-row">
+                        <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'R', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'R', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode Articulaire -->
+        <div class="pad" id="jointPad" hidden>
+            <div class="control-group" style="width: 100%; margin-bottom: 8px;">
+                <span>J1 — Base</span>
+                <div class="btn-row">
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J1', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-minus"></i></button>
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J1', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="control-group" style="width: 100%; margin-bottom: 8px;">
+                <span>J2 — Bras Arrière</span>
+                <div class="btn-row">
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J2', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-minus"></i></button>
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J2', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="control-group" style="width: 100%; margin-bottom: 8px;">
+                <span>J3 — Avant-Bras</span>
+                <div class="btn-row">
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J3', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-minus"></i></button>
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J3', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="control-group" style="width: 100%; margin-bottom: 8px;">
+                <span>J4 — Rotation Outil</span>
+                <div class="btn-row">
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J4', -1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-minus"></i></button>
+                    <button class="sub-btn" onpointerdown="demarrerMouvement(event, 'J4', 1)" onpointerup="arreterMouvement()" onpointercancel="arreterMouvement()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="speed-box">
+            <b>Vitesse</b>
+            <input type="range" id="speed" min="1" max="100" value="100" oninput="modifierAffichageVitesse(this.value)" onchange="changerVitesse(this.value)">
+            <b id="speedVal">100 %</b>
+        </div>
+
+        <div class="tool-row">
+            <button class="sub-btn" id="btnSuction" onclick="basculerEffecteur('ventouse')"><i class="fa-solid fa-wind"></i> Ventouse : OFF</button>
+            <button class="sub-btn" id="btnGripper" onclick="basculerEffecteur('pince')"><i class="fa-solid fa-hand-back-fist"></i> Pince : OUVERTE</button>
+        </div>
+
+        <div class="action-row">
+            <button class="home-btn" onclick="lancerRecalage()"><i class="fa-solid fa-house"></i> HOME</button>
+            <button class="stop-btn" onclick="arretUrgence()"><i class="fa-solid fa-octagon-xmark"></i> ARRÊT</button>
+        </div>
+
+        <div class="pose-display" id="poseDisplay">X: 0.00 | Y: 0.00 | Z: 0.00 | R: 0.00</div>
+        <div class="pose-display" id="jointDisplay">J1: 0.00 | J2: 0.00 | J3: 0.00 | J4: 0.00</div>
+    </div>
+
+    <!-- Panneau Retour Vidéo -->
+    <div class="panel">
+        <h2><i class="fa-solid fa-video"></i> Vue Vidéo</h2>
+        <div class="video-box">
+            <img src="/video_feed" alt="Flux Vidéo Partagé">
+        </div>
+        <p id="actionStatus" style="margin-top: 15px; font-style: italic; color: #666; font-size: 0.9rem;">Prêt à exécuter les mouvements tactiles.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/manuel.js') }}"></script>
+{% endblock %}
+

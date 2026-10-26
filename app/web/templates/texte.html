@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Commande Textuelle - Dobot{% endblock %}
+{% block header_title %}Commande Textuelle (NLU){% endblock %}
+
+{% block content %}
+<div class="standard-box">
+    <h3>Instruction en langage naturel ou commande directe</h3>
+    <p style="color: #666; font-size: 0.9rem;">
+        Exemples : <i>"va à X 200 Y 0 Z 30"</i>, <i>"monte de 20"</i>, <i>"ferme la pince"</i>, <i>"trie tout par couleur"</i>, <i>"recalage"</i>, <i>"arret"</i>
+    </p>
+
+    <input type="text" id="cmdInput" class="custom-input" placeholder="Saisir un ordre..." onkeydown="if(event.key==='Enter') envoyerCommande()">
+    <button class="primary-btn" onclick="envoyerCommande()"><i class="fa-solid fa-paper-plane"></i> Transmettre l'Ordre</button>
+
+    <div class="log-console" id="textLog">En attente d'instruction...</div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function envoyerCommande() {
+    const champSaisie = document.getElementById('cmdInput');
+    const texteOrdre = champSaisie.value.trim();
+    if (!texteOrdre) return;
+
+    const journal = document.getElementById('textLog');
+    journal.innerHTML = `> Analyse de la consigne : "${texteOrdre}"...\n`;
+
+    fetch('/api/texte', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ commande: texteOrdre })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.ok) {
+            journal.innerHTML += `✓ Succès : ${data.message}\n` +
+                                 `→ Contrat JSON généré : ${JSON.stringify(data.commande_json || data.command_json, null, 2)}`;
+            champSaisie.value = '';
+        } else {
+            journal.innerHTML += `✗ Refus ou Erreur : ${data.message}\n` +
+                                 (data.commande_json || data.command_json ? `→ Tentative JSON : ${JSON.stringify(data.commande_json || data.command_json)}` : '');
+        }
+    })
+    .catch(err => {
+        journal.innerHTML += `✗ Erreur réseau : ${err}`;
+    });
+}
+window.sendCommand = envoyerCommande;
+</script>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Suivi de Gestes - Dobot{% endblock %}
+{% block header_title %}Reconnaissance Gestuelle{% endblock %}
+
+{% block content %}
+<div class="standard-box" style="text-align: center;">
+    <h3>Détection des mains et postures (MediaPipe)</h3>
+    <div class="video-box" style="margin: 20px auto; max-width: 560px;">
+        <img src="/flux_video" alt="Flux Gestes">
+    </div>
+    <p style="color: #666; font-style: italic;">
+        L'analyse des points clés de la main s'exécute côté client (navigateur) pour alléger le Raspberry Pi.
+    </p>
+    <div class="log-console" id="gestureLog">Module gestuel initialisé.</div>
+</div>
+{% endblock %}
+

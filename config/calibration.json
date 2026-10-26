@@ -1,0 +1,18 @@
+{
+  "description": "Matrice d'homographie et 4 points de reference tapis vers robot",
+  "version": "1.0",
+  "calibrated": false,
+  "reference_points_pixels": [
+    [100.0, 100.0],
+    [540.0, 100.0],
+    [540.0, 380.0],
+    [100.0, 380.0]
+  ],
+  "reference_points_robot": [
+    [150.0, -100.0, -20.0],
+    [300.0, -100.0, -20.0],
+    [300.0, 100.0, -20.0],
+    [150.0, 100.0, -20.0]
+  ],
+  "homography_matrix": null
+}
